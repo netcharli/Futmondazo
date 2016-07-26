@@ -1,0 +1,69 @@
+@using Futmondazo.ViewModels.Futmondazo
+@model Futmondazo.ViewModels.Futmondazo.TeamDetailViewModel
+
+@{
+    ViewData["Title"] = "Team Details";
+}
+
+<h2>Equipazo de: @Model.Name (@Model.TeamName)</h2>
+
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            Valor del equipo
+        </dt>
+        <dd>
+            @Model.TeamValue.ToString("C")
+        </dd>
+        <dt>
+            Fondos
+        </dt>
+        <dd>
+            @Model.MovementsBalance.ToString("C")
+        </dd>
+        <dt>
+            Valor total
+        </dt>
+        <dd>
+            @((Model.TeamValue + Model.MovementsBalance).ToString("C"))
+        </dd>
+    </dl>
+</div>
+<h3>Movimientos</h3>
+<table class="table">
+    <thead>
+        <tr>
+            <th></th>
+            <th>Fecha</th>
+            <th>Jugador</th>
+            <th>Pujas</th>
+            <th class="text-right">Cantidad</th>
+            <th class="text-right">Valor jugador</th>
+            <th class="text-right">Diferencia</th>
+            <th>Origen/Destino</th>
+        </tr>
+    </thead>
+
+    @foreach (var movement in Model.PlayerMovements.OrderByDescending(m => m.Date).ToList())
+            {
+                var iconClass = movement.TipoMovimiento == TipoMovimiento.Fichaje ? "fa-arrow-left" : "fa-arrow-right";
+                var diferencia = (movement.Price - movement.PlayerValue) * (movement.TipoMovimiento == TipoMovimiento.Fichaje ? -1 : 1);
+                var diffClass = diferencia > 0 ? "bg-success" : "bg-danger";
+        <tr>
+            <td><span class="fa @iconClass"></span> @(movement.TipoMovimiento == TipoMovimiento.Fichaje ? "Fichaje" : "Venta")</td>
+            <td>@movement.Date.ToString("dd/MM/yyyy")</td>
+            <td>@movement.PlayerName</td>
+            <td>@movement.NumberOfBids</td>
+            <td class="text-right">@movement.Price.ToString("C")</td>
+            <td class="text-right">@movement.PlayerValue.ToString("C")</td>
+            <td class="text-right"><span class="@diffClass">@diferencia.ToString("C")</span></td>
+            <td>@(movement.TipoMovimiento == TipoMovimiento.Fichaje ? movement.SellerName : @movement.BuyerName)</td>
+        </tr>
+
+
+    }
+</table>
+<div>
+    <a asp-action="Teams">Back to List</a>
+</div>

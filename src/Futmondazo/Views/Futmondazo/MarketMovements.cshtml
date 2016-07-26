@@ -1,0 +1,50 @@
+@using System.Threading.Tasks
+@using Futmondazo.ViewModels.Futmondazo
+@model IEnumerable<Futmondazo.ViewModels.Futmondazo.PlayerMovementViewModel>
+
+@{
+    ViewData["Title"] = "Market Movements";
+}
+
+<h2>Movimientos</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th></th>
+            <th>Fecha</th>
+            <th>Jugador</th>
+            <th>Comprador</th>
+            <th>Vendedor</th>
+            <th>Nº Pujas</th>
+            <th class="text-right">Cantidad</th>
+            <th class="text-right">Valor jugador</th>
+            <th class="text-right">Diferencia</th>
+            
+        </tr>
+    </thead>
+
+    @foreach (var movement in Model.OrderByDescending(m => m.Date).ToList())
+            {
+                var iconClass = movement.TipoMovimiento == TipoMovimiento.Fichaje ? "fa-arrow-left" : (movement.TipoMovimiento == TipoMovimiento.Venta ? "fa-arrow-right" : "fa fa-arrows-h");
+                var diferencia = (movement.Price - movement.PlayerValue) * (movement.TipoMovimiento == TipoMovimiento.Fichaje ? -1 : 1);
+                var diffClass = diferencia > 0 ? "bg-success" : "bg-danger";
+        <tr>
+            <td>
+                <i class="fa @iconClass"></i>
+                @*@(movement.TipoMovimiento == TipoMovimiento.Fichaje ? "Fichaje" : "Venta")*@
+            </td>
+            <td>@movement.Date.ToString("dd/MM/yyyy")</td>
+            <td>@movement.PlayerName</td>
+            <td>@movement.BuyerName</td>
+            <td>@movement.SellerName</td>
+            <td>@movement.NumberOfBids</td>
+            <td class="text-right">@movement.Price.ToString("C")</td>
+            <td class="text-right">@movement.PlayerValue.ToString("C")</td>
+            <td class="text-right"><span class="@diffClass">@diferencia.ToString("C")</span></td>
+           
+        </tr>
+
+
+    }
+</table>

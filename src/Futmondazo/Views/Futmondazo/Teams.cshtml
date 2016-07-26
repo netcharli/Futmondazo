@@ -1,0 +1,54 @@
+@model IEnumerable<Futmondazo.ViewModels.Futmondazo.TeamViewModel>
+
+@{
+    ViewData["Title"] = "Teams";
+}
+
+<h2>Teams</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th class="text-right">Jugadores</th>
+            <th class="text-right">
+                @Html.DisplayNameFor(model => model.Points)
+            </th>
+            <th class="text-right">
+                Valor de equipo
+            </th>
+            <th class="text-right">
+                Fondos
+            </th>
+            <th class="text-right">Valor Total</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.OrderBy(t => t.Name).ToList()) {
+        <tr>
+            <td>
+                @item.Name (@item.TeamName)
+            </td>
+            <td class="text-right">@item.NumPlayers</td>
+            <td class="text-right">
+                @Html.DisplayFor(modelItem => item.Points)
+            </td>
+            <td class="text-right">
+                @item.TeamValue.ToString("C")
+            </td>
+            <td class="text-right">
+                @item.MovementsBalance.ToString("C")
+            </td>
+            <td class="text-right">
+                @((item.TeamValue + item.MovementsBalance).ToString("C"))
+            </td>
+            <td>
+                <a asp-action="TeamDetails" asp-route-id="@item.Id">Details</a> 
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
