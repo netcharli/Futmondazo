@@ -29,6 +29,8 @@ namespace Futmondazo.Data
 
             new PlayerMovementMap(builder.Entity<PlayerMovement>());
             new ChampionshipMap(builder.Entity<Championship>());
+            new PlayerHistoryMap(builder.Entity<PlayerHistory>());
+
         }
     }
 }

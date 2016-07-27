@@ -20,7 +20,5 @@ namespace Futmondazo.Models
         public int NumberOfBids { get; set; }
         public int PlayerValue { get; set; }
         public int Price { get; set; }
-
-
     }
 }
