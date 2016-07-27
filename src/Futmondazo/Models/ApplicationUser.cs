@@ -9,5 +9,7 @@ namespace Futmondazo.Models
     // Add profile data for application users by adding properties to the ApplicationUser class
     public class ApplicationUser : IdentityUser
     {
+        public string ChampionshipId { get; set; }
+        public Championship Championship { get; set; }
     }
 }

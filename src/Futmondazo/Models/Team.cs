@@ -15,6 +15,7 @@ namespace Futmondazo.Models
         public string TeamName { get; set; }
         public string UserId { get; set; }
         public string ChampionshipId { get; set; }
+        public Championship Championship { get; set; }
         public ICollection<PlayerMovement> PlayersBought { get; set; }
         public ICollection<PlayerMovement> PlayersSold { get; set; }
 

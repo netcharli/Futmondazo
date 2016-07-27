@@ -9,6 +9,7 @@ namespace Futmondazo.Models
     {
         public string Id { get; set; }
         public string ChampionshipId { get; set; }
+        public Championship Championship { get; set; }
         public string PlayerId { get; set; }
         public string PlayerName { get; set; }
         public string BuyerId { get; set; }

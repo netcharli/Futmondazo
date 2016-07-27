@@ -28,6 +28,7 @@ namespace Futmondazo.Data
             // Add your customizations after calling base.OnModelCreating(builder);
 
             new PlayerMovementMap(builder.Entity<PlayerMovement>());
+            new ChampionshipMap(builder.Entity<Championship>());
         }
     }
 }
