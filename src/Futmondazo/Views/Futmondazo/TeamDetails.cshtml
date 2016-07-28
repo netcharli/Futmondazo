@@ -53,7 +53,7 @@
         <tr>
             <td><span class="fa @iconClass"></span> @(movement.TipoMovimiento == TipoMovimiento.Fichaje ? "Fichaje" : "Venta")</td>
             <td>@movement.Date.ToString("dd/MM/yyyy")</td>
-            <td>@movement.PlayerName</td>
+            <td><a asp-action="PlayerDetail" asp-controller="Futmondazo" asp-route-id="@movement.PlayerId">@movement.PlayerName</a>  </td>
             <td>@movement.NumberOfBids</td>
             <td class="text-right">@movement.Price.ToString("C")</td>
             <td class="text-right">@movement.PlayerValue.ToString("C")</td>

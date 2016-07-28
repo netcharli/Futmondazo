@@ -7,6 +7,7 @@ using Futmondazo.Models;
 using Futmondazo.ViewModels.Futmondazo;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Formatters;
 using Microsoft.Extensions.Configuration;
 using Microsoft.EntityFrameworkCore;
 
@@ -65,7 +66,7 @@ namespace Futmondazo.Controllers
                 TeamValue = team.TeamValue,
                 Name = team.Name,
                 Points = team.Points,
-                MovementsBalance = GetTeamMovementBalance(team, _initialAmount),
+                MovementsBalance = team.GetTeamMovementBalance(_initialAmount),
                 TeamName = team.TeamName
             };
 
@@ -125,11 +126,16 @@ namespace Futmondazo.Controllers
             return View(movements);
         }
 
-        private int GetTeamMovementBalance(Team team, int initialAmount)
+        public IActionResult PlayerDetail(string id)
         {
-            return initialAmount
-                   + (team.PlayersSold.Any() ? team.PlayersSold.Sum(p => p.Price) : 0)
-                   - (team.PlayersBought.Any() ? team.PlayersBought.Sum(p => p.Price) : 0);
+            var player = _context.Players.SingleOrDefaultAsync(p => p.Id == id);
+
+            if (player == null)
+                return RedirectToAction("Teams", "Futmondazo");
+
+            return View(player);
         }
+
+        
     }
 }
