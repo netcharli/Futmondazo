@@ -7,6 +7,11 @@ namespace Futmondazo.Models
 {
     public class Team
     {
+        public Team()
+        {
+            PlayersBought = new List<PlayerMovement>();
+            PlayersSold = new List<PlayerMovement>();
+        }
         public string Id { get; set; }
         public string Name { get; set; }
         public int Points { get; set; }
@@ -18,6 +23,14 @@ namespace Futmondazo.Models
         public Championship Championship { get; set; }
         public ICollection<PlayerMovement> PlayersBought { get; set; }
         public ICollection<PlayerMovement> PlayersSold { get; set; }
+
+
+        public int GetTeamMovementBalance(int initialAmount)
+        {
+            return initialAmount
+                   + (PlayersSold.Any() ? PlayersSold.Sum(p => p.Price) : 0)
+                   - (PlayersBought.Any() ? PlayersBought.Sum(p => p.Price) : 0);
+        }
 
     }
 }
