@@ -22,6 +22,45 @@ namespace Futmondazo.Controllers.Api
             _context = context;
         }
 
+        // GET: api/Teams/5
+        [HttpGet("{id}")]
+        public async Task<IActionResult> Getplayer([FromRoute] string id)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var player = await _context.Players
+                .Include(p => p.Team)
+                .Include(p => p.PlayerHistories)
+                .SingleOrDefaultAsync(m => m.Id == id);
+
+            if (player == null)
+            {
+                return NotFound();
+            }
+
+            var playerViewModel = new PlayerViewModel
+            {
+                Id = player.Id,
+                Name = player.Name,
+                Photo = player.Photo,
+                Points = player.Points,
+                Price = player.Price,
+                TeamId = player.TeamId,
+                TeamName = player.Team.Name,
+                PlayerHistories = player.PlayerHistories.Select(h => new PlayerHistoryViewModel
+                {
+                    DateTime = h.DateTime,
+                    Price = h.Price
+                }).ToList()
+            };
+
+
+            return Ok(playerViewModel);
+        }
+
         // POST: api/Players
         [HttpPost]
         public async Task<IActionResult> PostPlayer([FromBody] PlayerViewModel playerViewModel)

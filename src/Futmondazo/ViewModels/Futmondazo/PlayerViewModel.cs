@@ -7,7 +7,7 @@ namespace Futmondazo.ViewModels.Futmondazo
     {
         public string Id { get; set; }
         public string TeamId { get; set; }
-
+        public string TeamName { get; set; }
         public string Name { get; set; }
         public string Photo { get; set; }
         public int Points { get; set; }
