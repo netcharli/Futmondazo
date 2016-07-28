@@ -19,6 +19,8 @@ namespace Futmondazo.Data
 
         public DbSet<Team> Teams { get; set; }
         public DbSet<PlayerMovement> PlayerMovements { get; set; }
+        public DbSet<Player> Players { get; set; }
+        public DbSet<PlayerHistory> PlayerHistories { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -32,5 +34,7 @@ namespace Futmondazo.Data
             new PlayerHistoryMap(builder.Entity<PlayerHistory>());
 
         }
+
+        
     }
 }

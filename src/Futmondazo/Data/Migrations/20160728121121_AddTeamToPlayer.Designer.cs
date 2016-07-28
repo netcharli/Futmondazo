@@ -8,9 +8,10 @@ using Futmondazo.Data;
 namespace Futmondazo.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20160728121121_AddTeamToPlayer")]
+    partial class AddTeamToPlayer
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.0.0-rtm-21431")
@@ -100,7 +101,7 @@ namespace Futmondazo.Data.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Players");
+                    b.ToTable("Player");
                 });
 
             modelBuilder.Entity("Futmondazo.Models.PlayerHistory", b =>
@@ -119,7 +120,7 @@ namespace Futmondazo.Data.Migrations
 
                     b.HasIndex("PlayerId");
 
-                    b.ToTable("PlayerHistories");
+                    b.ToTable("PlayerHistory");
                 });
 
             modelBuilder.Entity("Futmondazo.Models.PlayerMovement", b =>
