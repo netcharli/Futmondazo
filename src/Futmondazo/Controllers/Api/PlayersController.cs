@@ -49,7 +49,7 @@ namespace Futmondazo.Controllers.Api
                 Points = player.Points,
                 Price = player.Price,
                 TeamId = player.TeamId,
-                TeamName = player.Team.Name,
+                TeamName = player.Team?.Name,
                 PlayerHistories = player.PlayerHistories.Select(h => new PlayerHistoryViewModel
                 {
                     DateTime = h.DateTime,
