@@ -38,31 +38,7 @@
             .ready(function() {
                 var playerId = $("#player").data("player-id");
 
-                $.get("/api/players/" + playerId)
-                    .done(function(data) {
-                        var labels = data.playerHistories.map(function(h) {
-                            return h.dateTime;
-                        });
-
-                        var values = data.playerHistories.map(function(h) {
-                            return h.price;
-                        });
-                        var ctx = $("#playerChart");
-                        var playerChart = new Chart(ctx,
-                        {
-                            type: 'line',
-                            data: {
-                                labels: labels,
-                                datasets: [
-                                    {
-                                        label: 'Precio',
-                                        data: values
-                                    }
-                                ]
-                            }
-
-                        });
-                    });
+                PlayerController.loadChart(playerId, "playerChart");
             });
     </script>
 }
