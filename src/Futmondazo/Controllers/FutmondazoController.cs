@@ -75,7 +75,9 @@ namespace Futmondazo.Controllers
             {
                 Price = m.Price,
                 BuyerName = m.Buyer != null ? m.Buyer.Name : "Futmondo",
+                BuyerId = m.BuyerId,
                 SellerName = m.Seller != null ? m.Seller.Name : "Futmondo",
+                SellerId = m.SellerId,
                 Date = m.Date,
                 NumberOfBids = m.NumberOfBids,
                 PlayerId = m.PlayerId,
@@ -88,7 +90,9 @@ namespace Futmondazo.Controllers
             {
                 Price = m.Price,
                 BuyerName = m.Buyer != null ? m.Buyer.Name : "Futmondo",
+                BuyerId = m.Buyer?.Id,
                 SellerName = m.Seller != null ? m.Seller.Name : "Futmondo",
+                SellerId = m.Seller?.Id,
                 Date = m.Date,
                 NumberOfBids = m.NumberOfBids,
                 PlayerId = m.PlayerId,
@@ -112,7 +116,9 @@ namespace Futmondazo.Controllers
                     {
                         Price = m.Price,
                         BuyerName = m.Buyer != null ? m.Buyer.Name : "Futmondo",
+                        BuyerId = m.BuyerId,
                         SellerName = m.Seller != null ? m.Seller.Name : "Futmondo",
+                        SellerId = m.SellerId,
                         Date = m.Date,
                         NumberOfBids = m.NumberOfBids,
                         PlayerId = m.PlayerId,

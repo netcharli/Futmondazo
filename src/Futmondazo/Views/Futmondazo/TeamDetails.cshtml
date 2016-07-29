@@ -53,7 +53,10 @@
         <tr>
             <td><span class="fa @iconClass"></span> @(movement.TipoMovimiento == TipoMovimiento.Fichaje ? "Fichaje" : "Venta")</td>
             <td>@movement.Date.ToString("dd/MM/yyyy")</td>
-            <td><a asp-action="PlayerDetail" asp-controller="Futmondazo" asp-route-id="@movement.PlayerId">@movement.PlayerName</a>  </td>
+            <td>
+                <a href="#" class="js-player-chart-popup"><i class="fa fa-line-chart" data-player-id="@movement.PlayerId"></i></a> | 
+                <a asp-action="PlayerDetail" asp-controller="Futmondazo" asp-route-id="@movement.PlayerId">@movement.PlayerName</a>
+            </td>
             <td>@movement.NumberOfBids</td>
             <td class="text-right">@movement.Price.ToString("C")</td>
             <td class="text-right">@movement.PlayerValue.ToString("C")</td>
@@ -67,3 +70,31 @@
 <div>
     <a asp-action="Teams">Back to List</a>
 </div>
+
+<!-- Chart Modal -->
+<div class="modal fade" id="playerChartPopup" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Evolución del jugador</h4>
+            </div>
+            <div class="modal-body">
+                <canvas id="playerChart" width="400" height="150"></canvas>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    <script>
+
+        $(document)
+            .ready(function () {
+                PlayerController.loadChartInPopup("js-player-chart-popup", "playerChart", "playerChartPopup");
+            });
+    </script>
+}

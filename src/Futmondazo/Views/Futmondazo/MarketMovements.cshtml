@@ -1,4 +1,5 @@
 ﻿@using System.Threading.Tasks
+@using Futmondazo.Data.Migrations
 @using Futmondazo.ViewModels.Futmondazo
 @model IEnumerable<Futmondazo.ViewModels.Futmondazo.PlayerMovementViewModel>
 
@@ -20,7 +21,7 @@
             <th class="text-right">Cantidad</th>
             <th class="text-right">Valor jugador</th>
             <th class="text-right">Diferencia</th>
-            
+
         </tr>
     </thead>
 
@@ -35,16 +36,66 @@
                 @*@(movement.TipoMovimiento == TipoMovimiento.Fichaje ? "Fichaje" : "Venta")*@
             </td>
             <td>@movement.Date.ToString("dd/MM/yyyy")</td>
-            <td><a asp-action="PlayerDetail" asp-controller="Futmondazo" asp-route-id="@movement.PlayerId">@movement.PlayerName</a>  </td>
-            <td>@movement.BuyerName</td>
-            <td>@movement.SellerName</td>
+            <td>
+                <a href="#" class="js-player-chart-popup"><i class="fa fa-line-chart" data-player-id="@movement.PlayerId"></i></a> |
+                <a asp-action="PlayerDetail" asp-controller="Futmondazo" asp-route-id="@movement.PlayerId">@movement.PlayerName</a>
+
+            </td>
+            <td>
+                @if (string.IsNullOrWhiteSpace(movement.BuyerId))
+                {
+                    @movement.BuyerName
+                }
+                else
+                {
+                    <a asp-action="TeamDetails" asp-controller="Futmondazo" asp-route-id="@movement.BuyerId">@movement.BuyerName</a>
+
+                }
+            </td>
+            <td>
+                @if (string.IsNullOrWhiteSpace(movement.SellerId))
+                {
+                    @movement.SellerName
+                }
+                else
+                {
+                    <a asp-action="TeamDetails" asp-controller="Futmondazo" asp-route-id="@movement.SellerId">@movement.SellerName</a>
+
+                }
+            </td>
             <td>@movement.NumberOfBids</td>
             <td class="text-right">@movement.Price.ToString("C")</td>
             <td class="text-right">@movement.PlayerValue.ToString("C")</td>
             <td class="text-right"><span class="@diffClass">@diferencia.ToString("C")</span></td>
-           
+
         </tr>
-
-
     }
 </table>
+
+<!-- Modal -->
+<div class="modal fade" id="playerChartPopup" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Evolución del jugador</h4>
+            </div>
+            <div class="modal-body">
+                <canvas id="playerChart" width="400" height="150"></canvas>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    <script>
+
+        $(document)
+            .ready(function () {
+                PlayerController.loadChartInPopup("js-player-chart-popup", "playerChart", "playerChartPopup");
+            });
+    </script>
+}
