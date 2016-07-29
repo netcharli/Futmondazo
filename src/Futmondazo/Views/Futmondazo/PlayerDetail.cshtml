@@ -1,42 +1,68 @@
-@model Futmondazo.Models.Player
+﻿@model Futmondazo.Models.Player
 
 @{
-    ViewData["Title"] = "PlayerDetail";
+    ViewData["Title"] = "Player Detail";
 }
 
-<h2>PlayerDetail</h2>
+<h2>@Model.Name</h2>
 
 <div>
-    <h4>Player</h4>
-    <hr />
-    <dl class="dl-horizontal">
+  
+    <hr/>
+    <div id="player" data-player-id="@Model.Id" class="dl-horizontal">
+     
         <dt>
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Name)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Photo)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Photo)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Points)
+            Points
         </dt>
         <dd>
             @Html.DisplayFor(model => model.Points)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.Price)
+            Precio:
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.Price)
+            @Model.Price.ToString("C")
         </dd>
-    </dl>
+    </div>
+
+    <p>Evolución del jugador</p>
+
+    <canvas id="playerChart" width="400" height="150"></canvas>
+
 </div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
-</div>
+
+@section scripts{
+    <script>
+
+        $(document)
+            .ready(function() {
+                var playerId = $("#player").data("player-id");
+
+                $.get("/api/players/" + playerId)
+                    .done(function(data) {
+                        var labels = data.playerHistories.map(function(h) {
+                            return h.dateTime;
+                        });
+
+                        var values = data.playerHistories.map(function(h) {
+                            return h.price;
+                        });
+                        var ctx = $("#playerChart");
+                        var playerChart = new Chart(ctx,
+                        {
+                            type: 'line',
+                            data: {
+                                labels: labels,
+                                datasets: [
+                                    {
+                                        label: 'Precio',
+                                        data: values
+                                    }
+                                ]
+                            }
+
+                        });
+                    });
+            });
+    </script>
+}
