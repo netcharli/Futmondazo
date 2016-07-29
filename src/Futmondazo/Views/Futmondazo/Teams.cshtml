@@ -6,7 +6,7 @@
 
 <h2>Teams</h2>
 
-<table class="table">
+<table class="table" id="teams-table">
     <thead>
         <tr>
             <th>
@@ -27,28 +27,50 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model.OrderBy(t => t.Name).ToList()) {
-        <tr>
-            <td>
-                @item.Name (@item.TeamName)
-            </td>
-            <td class="text-right">@item.NumPlayers</td>
-            <td class="text-right">
-                @Html.DisplayFor(modelItem => item.Points)
-            </td>
-            <td class="text-right">
-                @item.TeamValue.ToString("C")
-            </td>
-            <td class="text-right">
-                @item.MovementsBalance.ToString("C")
-            </td>
-            <td class="text-right">
-                @((item.TeamValue + item.MovementsBalance).ToString("C"))
-            </td>
-            <td>
-                <a asp-action="TeamDetails" asp-route-id="@item.Id">Details</a> 
-            </td>
-        </tr>
-}
+        @foreach (var item in Model.OrderBy(t => t.Name).ToList())
+        {
+            <tr>
+                <td>
+                    @item.Name (@item.TeamName)
+                </td>
+                <td class="text-right">@item.NumPlayers</td>
+                <td class="text-right">
+                    @Html.DisplayFor(modelItem => item.Points)
+                </td>
+                <td class="text-right">
+                    @item.TeamValue.ToString("C")
+                </td>
+                <td class="text-right">
+                    @item.MovementsBalance.ToString("C")
+                </td>
+                <td class="text-right">
+                    @((item.TeamValue + item.MovementsBalance).ToString("C"))
+                </td>
+                <td>
+                    <a asp-action="TeamDetails" asp-route-id="@item.Id">Details</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
+
+
+@section scripts{
+    <script>
+        $(document).ready(function () {
+            $('#teams-table').dataTable({
+                searching: false,
+                paging: false,
+                info: false,
+                "language": {
+                    "decimal": ",",
+                    "thousands": "."
+                },
+                "columnDefs": [
+                    { "orderable": false, "targets": 6 }
+                ]
+            });
+        });
+    </script>
+}
+
