@@ -128,7 +128,7 @@ namespace Futmondazo.Controllers
 
         public IActionResult PlayerDetail(string id)
         {
-            var player = _context.Players.SingleOrDefaultAsync(p => p.Id == id);
+            var player = _context.Players.SingleOrDefault(p => p.Id == id);
 
             if (player == null)
                 return RedirectToAction("Teams", "Futmondazo");
