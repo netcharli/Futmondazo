@@ -21,6 +21,7 @@ namespace Futmondazo.Data
         public DbSet<PlayerMovement> PlayerMovements { get; set; }
         public DbSet<Player> Players { get; set; }
         public DbSet<PlayerHistory> PlayerHistories { get; set; }
+        public DbSet<Puntuation> Puntuations { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -32,7 +33,7 @@ namespace Futmondazo.Data
             new PlayerMovementMap(builder.Entity<PlayerMovement>());
             new ChampionshipMap(builder.Entity<Championship>());
             new PlayerHistoryMap(builder.Entity<PlayerHistory>());
-
+            new PuntuationMap(builder.Entity<Puntuation>());
         }
 
         

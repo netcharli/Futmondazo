@@ -11,6 +11,7 @@ namespace Futmondazo.Models
         {
             PlayersBought = new List<PlayerMovement>();
             PlayersSold = new List<PlayerMovement>();
+            Puntuations = new List<Puntuation>();
         }
         public string Id { get; set; }
         public string Name { get; set; }
@@ -23,6 +24,7 @@ namespace Futmondazo.Models
         public Championship Championship { get; set; }
         public ICollection<PlayerMovement> PlayersBought { get; set; }
         public ICollection<PlayerMovement> PlayersSold { get; set; }
+        public ICollection<Puntuation> Puntuations { get; set; }
 
 
         public int GetTeamMovementBalance(int initialAmount)
