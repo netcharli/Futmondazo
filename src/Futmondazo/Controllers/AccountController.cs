@@ -88,7 +88,7 @@ namespace Futmondazo.Controllers
         //
         // GET: /Account/Register
         [HttpGet]
-        //[AllowAnonymous]
+        [AllowAnonymous]
         public IActionResult Register(string returnUrl = null)
         {
             ViewData["ReturnUrl"] = returnUrl;
@@ -98,7 +98,7 @@ namespace Futmondazo.Controllers
         //
         // POST: /Account/Register
         [HttpPost]
-        //[AllowAnonymous]
+        [AllowAnonymous]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Register(RegisterViewModel model, string returnUrl = null)
         {
